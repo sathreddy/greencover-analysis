@@ -4,7 +4,7 @@
 
 // // Initialize Firebase
 // var config2 = {
-// apiKey: "AIzaSyBtm-rKNqZsDL2dX97GbQnVP3tnfUb7DqE",
+// apiKey: "...",
 // authDomain: "greencover-9e98f.firebaseapp.com",
 // databaseURL: "https://greencover-9e98f.firebaseio.com",
 // projectId: "greencover-9e98f",
@@ -18,7 +18,7 @@
 
         var mapSize = "1500,1500";
         var format = "png";
-        var BingMapsKey = "AsmNTZOGHHG-CM-bayMVqMUL3BVv2xOQ0Oct8RT9g1YTA_FsmEnmC9oHTMfjcVfe";
+        var BingMapsKey = "...";
         var mapMetaData = "0";
      
         var r_earth  = 6378;
