@@ -1,7 +1,6 @@
 import cv2
 import numpy as np
 
-im = cv2.imread("img4.png")
 def color_thresh(chan, thresh):
     if chan[0] == 0:
         chan[0] += 1
@@ -29,6 +28,7 @@ def green_detector(img, thresh):
     cond = False
     height, width, channels = img.shape
     mask = np.zeros_like(img)
+    # mask = cv2.bitwise_not(mask)
     for j in range(height):
         for i in range(width):
             sum_b += img[j][i][0]
@@ -52,8 +52,13 @@ def green_detector(img, thresh):
     print(vegitation)
     return mask
 
-while True:
-    cv2.imshow('original_image',im)
-    cv2.imshow('img',green_detector(im, 1.1))
-    cv2.waitKey(1)
+def main(path = 'img5.png'):
+    while True:
+        im = cv2.imread(path)
+        cv2.imshow('original_image',im)
+        cv2.imshow('img',green_detector(im, 1.1))
+        cv2.waitKey(1)
+
+if __name__ == '__main__':
+    main()
 cv2.destroyAllWindows()

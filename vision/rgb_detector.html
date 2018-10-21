@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+	</head>
+
+	<script src="opencv.js" type="text/javascript">
+		let imgElement = document.getElementById('img5.png');
+		let inputElement = document.getElementById('fileInput');
+		inputElement.addEventListener('change', (e) => {
+  	imgElement.src = URL.createObjectURL(e.target.files[0]);
+	}, false);
+	imgElement.onload = function() {
+  let img = cv.imread(imgElement);
+  green_detector(img, 1.1)
+}; // ADD IMAGE
+		function color_thresh(r,g,b,thresh) {
+
+			if (b == 0) {
+				b += 1
+			}
+			if (r == 0) {
+				r += 1
+			}
+		  if (g == 0) {
+				g += 1
+			}
+
+			var reducer = false
+
+			if (b/g > 1.2 && b/r > 1.2) {
+				reducer += 1
+			}
+
+			if (g/b > thresh && g/r > thresh) {
+				return [true, reducer]
+			} else {
+				return [false, reducer]
+			}
+		}
+
+		function green_detector(img, thresh) {
+			var reducer = 0
+			var green_counter = 0
+			var red = false
+			var cond = false
+			var height = img.rows
+			var width = img.cols
+			var channels = img.channels()
+			var vegitation = 0
+			for (var j = 0; j < height; j++) {
+				for (var i = 0; i < width; i++) {
+					var output = color_thresh(img.ucharAt(j, i * img.chanels()),
+					img.ucharAt(j, i * img.chanels() + 1),
+					img.ucharAt(j, i * img.chanels() + 2), thresh);
+
+					if (output[1]) {
+						reducer += 1
+					}
+					if (output[0] == false) {
+						img.ucharAt(j, i * img.chanels()) = 0
+						img.ucharAt(j, i * img.chanels() + 1) = 0
+						img.ucharAt(j, i * img.chanels() + 2) = 0
+					} else {
+						green_counter += 1
+					}
+				}
+			}
+			if (reducer != width*height) {
+				vegitation = green_counter/(width*height - reducer)
+			}
+			// vegitation has the percentage of greenery
+		}
+		</script>
+		</html>
