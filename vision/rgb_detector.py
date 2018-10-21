@@ -1,23 +1,32 @@
 import cv2
 import numpy as np
 
-im = cv2.imread("img1.png")
-
+im = cv2.imread("img4.png")
 def color_thresh(chan, thresh):
     if chan[0] == 0:
         chan[0] += 1
     if chan[2] == 0:
         chan[2] += 1
-    
+    if chan[1] == 0:
+        chan[1] += 1
+    reducer = False
+
+    if (chan[0]/chan[1] > 1.2 and chan[0]/chan[2] > 1.2):
+        reducer = True
+
     if ((chan[1]/chan[0]) > thresh and (chan[1]/chan[2]) > thresh):
-        return True
+        return True, reducer
     else:
-        return False
+        return False, reducer
 
 def green_detector(img, thresh):
     sum_b = 0
     sum_r = 0
     sum_g = 0
+    reducer = 0
+    green_counter = 0
+    red = False
+    cond = False
     height, width, channels = img.shape
     mask = np.zeros_like(img)
     for j in range(height):
@@ -25,12 +34,22 @@ def green_detector(img, thresh):
             sum_b += img[j][i][0]
             sum_r += img[j][i][2]
             sum_g += img[j][i][1]
-            if color_thresh(img[j][i], thresh):
+            cond, red = color_thresh(img[j][i], thresh)
+            if red:
+                reducer += 1
+            if cond:
                 mask[j][i] = img[j][i]
-    mean_r = sum_r/(width*height)
-    mean_b = sum_b/(width*height)
-    mean_g = sum_g/(width*height)
-    print(mean_b, mean_g, mean_r)
+                green_counter += 1
+    print(green_counter)
+    print(reducer)
+    if reducer == width*height:
+        vegitation = mean_r = mean_b = mean_g = 0
+    else:
+        mean_r = sum_r/(width*height - reducer)
+        mean_b = sum_b/(width*height - reducer)
+        mean_g = sum_g/(width*height - reducer)
+        vegitation = green_counter/(width*height - reducer)
+    print(vegitation)
     return mask
 
 while True:

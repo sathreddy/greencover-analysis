@@ -1,8 +1,8 @@
 import requests
 from PIL import Image
-
-centerPoint = "33.748094,-84.390009"
-zoomLevel = "16"
+centerPoint = "43.7, -79.3834"
+# centerPoint = "33.748094,-84.390009"
+zoomLevel = "12"
 mapSize = "1000,1000"
 # string pushpin = "33.748094,-84.390009"
 # string mapLayer = "TrafficFlow"
