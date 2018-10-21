@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<head>
+    <title>Location Finder</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <script>
+        var placeHolder = document.createElement("input")
+        placeHolder.placeholder = "Enter an address"
+        placeHolder.id = "sampleText"
+
+        document.body.appendChild(placeHolder)
+        
+        var lat, long;
+
+        document.getElementById(placeHolder.id).addEventListener('keydown', function(event){
+            if(event.keyCode == 13){
+                var loc = placeHolder.value
+                console.log(loc)
+                document.body.removeChild(placeHolder)
+                
+                loc = loc.split(' ').join('+')
+
+                var url = 'https://maps.googleapis.com/maps/api/geocode/json?address='
+                var apiKey = 'AIzaSyCiwJd4MhjyyKXM_Tl_mb-EBTme-Cn6pcc'
+                url += loc + '&key=' + apiKey
+
+                var Http = new XMLHttpRequest();
+                                
+                console.log(url);
+
+                Http.onreadystatechange = function(){
+                    if (Http.readyState == 4 && Http.status == 200) {
+                        var json = JSON.parse(Http.responseText);
+                        lat = json.results[0].geometry.location.lat;
+                        long = json.results[0].geometry.location.lng;
+
+                        console.log(lat)
+                        console.log(long)
+                    }
+                };
+                    
+                Http.open("GET", url, true);
+                Http.send();                
+            }
+        });
+
+    </script>
+</body>
