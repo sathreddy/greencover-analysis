@@ -27,7 +27,7 @@ function generateImgUrls(centerLat, centerLong, zoomLevel) {
 
     for(i = 0; i < 3; i++){
             var coord = String(centerLat) + "," + String(centerLong);
-            var imgLink = "https://dev.virtualearth.net/REST/v1/Imagery/Map/Aerial/" +  coord + "/" + zoomLevel + "?mapSize=" + mapSize + "&format=" + format + "&mapMetaData=" + mapMetaData + "&key=" + BingMapsKey;
+            var imgLink = "https://dev.virtualearth.net/REST/v1/Imagery/Map/Aerial/" +  coord + "/" + String(zoomLevel) + "?mapSize=" + mapSize + "&format=" + format + "&mapMetaData=" + mapMetaData + "&key=" + BingMapsKey;
             zoomLevel--;
       }
 }
