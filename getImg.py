@@ -4,7 +4,7 @@ import requests
 import math
 
 zoomLevel = "18";
-mapSize = "1000,1000";
+mapSize = "1500,1500";
 format = "png";
 BingMapsKey = "AsmNTZOGHHG-CM-bayMVqMUL3BVv2xOQ0Oct8RT9g1YTA_FsmEnmC9oHTMfjcVfe";
 mapMetaData = "0";
@@ -18,7 +18,7 @@ r_earth  = 6378
 pi = 3.145159265
 resolution = 156543.04 * (math.cos(centerLat) / math.pow(2,18))
 print(resolution)
-resolution = 1.275 * abs(resolution)
+resolution = 1.85 * abs(resolution)
 print(resolution)
 
 
