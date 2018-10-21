@@ -4,6 +4,19 @@
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+    <script src="https://www.gstatic.com/firebasejs/5.5.5/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+        apiKey: "AIzaSyBtm-rKNqZsDL2dX97GbQnVP3tnfUb7DqE",
+        authDomain: "greencover-9e98f.firebaseapp.com",
+        databaseURL: "https://greencover-9e98f.firebaseio.com",
+        projectId: "greencover-9e98f",
+        storageBucket: "greencover-9e98f.appspot.com",
+        messagingSenderId: "364417018606"
+        };
+        firebase.initializeApp(config);
+    </script>
     <script>
         var placeHolder = document.createElement("input")
         placeHolder.placeholder = "Enter an address"
@@ -37,6 +50,7 @@
 
                         console.log(lat)
                         console.log(long)
+                        writeUserData(long, lat)
                     }
                 };
                     
@@ -45,5 +59,8 @@
             }
         });
 
+        function writeUserData(longitude, latitude){
+            firebase.database().ref('/').set({long: longitude, lat: latitude});
+        }
     </script>
 </body>
