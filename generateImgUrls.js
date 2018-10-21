@@ -7,8 +7,8 @@ function generateImgUrls(centerLat, centerLong, zoomLevel) {
    var BingMapsKey = "AsmNTZOGHHG-CM-bayMVqMUL3BVv2xOQ0Oct8RT9g1YTA_FsmEnmC9oHTMfjcVfe";
    var mapMetaData = "0";
 
-   var centerLat = 33.748094;
-   var centerLong = -84.390009;
+   // var centerLat = 33.748094;
+   // var centerLong = -84.390009;
    var r_earth  = 6378;
    var pi = 3.145159265;
    var resolution = 156543.04 * (Math.cos(centerLat) / Math.pow(2,zoomLevel));
@@ -26,7 +26,7 @@ function generateImgUrls(centerLat, centerLong, zoomLevel) {
    var i;
 
     for(i = 0; i < 3; i++){
-            var coord = String(latList[i]) + "," + String(longList[i]);
+            var coord = String(centerLat) + "," + String(centerLong);
             var imgLink = "https://dev.virtualearth.net/REST/v1/Imagery/Map/Aerial/" +  coord + "/" + zoomLevel + "?mapSize=" + mapSize + "&format=" + format + "&mapMetaData=" + mapMetaData + "&key=" + BingMapsKey;
             zoomLevel--;
       }
