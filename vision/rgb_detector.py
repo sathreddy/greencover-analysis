@@ -40,8 +40,8 @@ def green_detector(img, thresh):
             if cond:
                 mask[j][i] = img[j][i]
                 green_counter += 1
-    print(green_counter)
-    print(reducer)
+    print("Vegitation Pixels:", green_counter)
+    print("Water Pixels:", reducer)
     if reducer == width*height:
         vegitation = mean_r = mean_b = mean_g = 0
     else:
@@ -49,19 +49,14 @@ def green_detector(img, thresh):
         mean_b = sum_b/(width*height - reducer)
         mean_g = sum_g/(width*height - reducer)
         vegitation = green_counter/(width*height - reducer)
-    print(vegitation)
+    print("Land Covered with Vegitation: ", vegitation*100, "%")
     return mask
 
-def main(path = 'img5.png'):
-    im = []
-    im.append(cv2.imread('a.png'))
-    im.append(cv2.imread('b.png'))
-    im.append(cv2.imread('c.png'))
-    z = ['a','b','c']
-    for i in range(3):
-    # cv2.imshow('original_image',im)
-        path = z[i] + '_p.png'
-        cv2.imwrite(path, green_detector(im, 1.1)
+def main(path = 'img1.png'):
+    im = cv2.imread(path)
+    while True:
+        cv2.imshow('original img', im)
+        cv2.imshow('img', green_detector(im, 1.1))
         cv2.waitKey(1)
 
 if __name__ == '__main__':
