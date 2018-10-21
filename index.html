@@ -4,6 +4,7 @@
     <link rel="stylesheet" type="text/css" href="style.css">
     <script type="text/javascript" src="generateImgUrls.js"></script>
     <script type="text/javascript" src="download.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 </head>
 <body>
     <script src="https://www.gstatic.com/firebasejs/5.5.5/firebase.js"></script>
@@ -63,22 +64,25 @@
                         var x=new XMLHttpRequest();
                         x.open("GET", links[0], true);
                         x.responseType = 'blob';
-                        x.onload=function(e){download(x.response, "most zoom.png", "image/png"); }
+                        x.onload=function(e){download(x.response, "a.png", "image/png"); }
                         x.send();
 
                         var links = generateImgUrls(lat, long, zoomLevel)
                         var y=new XMLHttpRequest();
                         y.open("GET", links[1], true);
                         y.responseType = 'blob';
-                        y.onload=function(e){download(y.response, "middle zoom.png", "image/png"); }
+                        y.onload=function(e){download(y.response, "b.png", "image/png"); }
                         y.send();
 
                         var links = generateImgUrls(lat, long, zoomLevel)
                         var z=new XMLHttpRequest();
                         z.open("GET", links[2], true);
                         z.responseType = 'blob';
-                        z.onload=function(e){download(z.response, "least zoom.png", "image/png"); }
+                        z.onload=function(e){download(z.response, "c.png", "image/png"); }
                         z.send();
+
+                        const shell = require('shelljs');
+                        shell.exec('')  //SET THE PATH TO YOUR DOWNLOADS
                     }
                 };
                     
