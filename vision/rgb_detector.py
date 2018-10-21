@@ -53,10 +53,15 @@ def green_detector(img, thresh):
     return mask
 
 def main(path = 'img5.png'):
-    while True:
-        im = cv2.imread(path)
-        cv2.imshow('original_image',im)
-        cv2.imshow('img',green_detector(im, 1.1))
+    im = []
+    im.append(cv2.imread('a.png'))
+    im.append(cv2.imread('b.png'))
+    im.append(cv2.imread('c.png'))
+    z = ['a','b','c']
+    for i in range(3):
+    # cv2.imshow('original_image',im)
+        path = z[i] + '_p.png'
+        cv2.imwrite(path, green_detector(im, 1.1)
         cv2.waitKey(1)
 
 if __name__ == '__main__':
