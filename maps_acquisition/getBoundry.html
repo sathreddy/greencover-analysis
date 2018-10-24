@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>sdsloadsingleboundaryHTML</title>
+        <meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>
+        <style type='text/css'>body{margin:0;padding:0;overflow:hidden;font-family:'Segoe UI',Helvetica,Arial,Sans-Serif}</style>
+    </head>
+    <body>
+        <div id='printoutPanel'></div>
+        
+        <div id='myMap' style='width: 100vw; height: 100vh;'></div>
+        <script type='text/javascript'>
+            function loadMapScenario() {
+                var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
+                    /* No need to set credentials if already passed in URL */
+                    center: new Microsoft.Maps.Location(43.7, -79.3834),
+                    zoom: 10 });
+                var geoDataRequestOptions = {
+                    entityType: 'PopulatedPlace'
+                };
+                Microsoft.Maps.loadModule('Microsoft.Maps.SpatialDataService', function () {
+                    //Use the GeoData API manager to get the boundary
+                    Microsoft.Maps.SpatialDataService.GeoDataAPIManager.getBoundary(map.getCenter(), geoDataRequestOptions, map, function (data) {
+                        if (data.results && data.results.length > 0) {
+                            map.entities.push(data.results[0].Polygons);
+			    console.log(data.results[0]);
+			}
+                    }, null, function errCallback(networkStatus, statusMessage) {
+                        console.log(networkStatus);
+                        console.log(statusMessage);
+                    });
+                });
+                
+            }
+        </script>
+        <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?key=AsmNTZOGHHG-CM-bayMVqMUL3BVv2xOQ0Oct8RT9g1YTA_FsmEnmC9oHTMfjcVfe&callback=loadMapScenario' async defer></script>
+    </body>
+</html>

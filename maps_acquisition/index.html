@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<head>
+    <title>Location Finder</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script type="text/javascript" src="generateImgUrls.js"></script>
+    <script type="text/javascript" src="download.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+</head>
+<body>
+    <script src="https://www.gstatic.com/firebasejs/5.5.5/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+        apiKey: "...",
+        authDomain: "greencover-9e98f.firebaseapp.com",
+        databaseURL: "https://greencover-9e98f.firebaseio.com",
+        projectId: "greencover-9e98f",
+        storageBucket: "greencover-9e98f.appspot.com",
+        messagingSenderId: "364417018606"
+        };
+        firebase.initializeApp(config);
+    </script>
+    <script>
+        var placeHolder = document.createElement("input")
+        placeHolder.placeholder = "Enter an address"
+        placeHolder.id = "sampleText"
+
+        document.body.appendChild(placeHolder)
+        
+        var lat, long, zoomLevel;
+
+        document.getElementById(placeHolder.id).addEventListener('keydown', function(event){
+            if(event.keyCode == 13){
+                var locRaw = placeHolder.value;
+                document.body.removeChild(placeHolder)
+                
+                var loc = locRaw
+                
+                
+                loc = loc.split(' ').join('+')
+
+                var url = 'https://maps.googleapis.com/maps/api/geocode/json?address='
+                var apiKey = 'AIzaSyCiwJd4MhjyyKXM_Tl_mb-EBTme-Cn6pcc'
+                url += loc + '&key=' + apiKey
+
+                var Http = new XMLHttpRequest();
+
+                Http.onreadystatechange = function(){
+                    if (Http.readyState == 4 && Http.status == 200) {
+                        var json = JSON.parse(Http.responseText);
+                        console.log(Http.responseText)
+                        lat = json.results[0].geometry.location.lat;
+                        long = json.results[0].geometry.location.lng;
+
+                        if(json.results[0].address_components[0].types[0] == 'street_number')
+                            zoomLevel = 19
+                        else if(!isNaN(parseInt(locRaw[locRaw.length - 1])))  
+                            zoomLevel = 15
+                        else
+                            zoomLevel = 13
+
+                        // writeUserData(long, lat)
+                        var links = generateImgUrls(lat, long, zoomLevel)
+                        var x=new XMLHttpRequest();
+                        x.open("GET", links[0], true);
+                        x.responseType = 'blob';
+                        x.onload=function(e){download(x.response, "a.png", "image/png"); }
+                        x.send();
+
+                        var links = generateImgUrls(lat, long, zoomLevel)
+                        var y=new XMLHttpRequest();
+                        y.open("GET", links[1], true);
+                        y.responseType = 'blob';
+                        y.onload=function(e){download(y.response, "b.png", "image/png"); }
+                        y.send();
+
+                        var links = generateImgUrls(lat, long, zoomLevel)
+                        var z=new XMLHttpRequest();
+                        z.open("GET", links[2], true);
+                        z.responseType = 'blob';
+                        z.onload=function(e){download(z.response, "c.png", "image/png"); }
+                        z.send();
+
+                    }
+                };
+                    
+                Http.open("GET", url, true);
+                Http.send();
+                // main();
+            }
+        });
+
+        // function writeUserData(longitude, latitude){
+        //     firebase.database().ref('/').set({long: longitude, lat: latitude});
+        // }
+        // function main(){
+            // firebase.database().ref('/').once('value').then(function(snapshot) {
+            //     var tempShot = snapshot.val()
+            //     var longNew = tempShot.long;
+            //     var latNew = tempShot.lat;
+            //     generateImgUrls(longNew, latNew)
+            // });
+        // }
+    </script>
+</body>
