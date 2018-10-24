@@ -1,0 +1,6 @@
+#!/bin/bash
+
+mv /home/akshay/Downloads/a.png .
+
+python3 rgb_detector.py
+

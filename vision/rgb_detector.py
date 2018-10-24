@@ -52,7 +52,7 @@ def green_detector(img, thresh):
     print("Land Covered with Vegitation: ", vegitation*100, "%")
     return mask
 
-def main(path = 'img1.png'):
+def main(path = 'a.png'):
     im = cv2.imread(path)
     while True:
         cv2.imshow('original img', im)
